@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.sun</groupId>
-    <artifactId>jdexmaker</artifactId>
-    <version>2.28.3-wrap</version>
+    <artifactId>Jdexmaker</artifactId>
+    <version>2.28.3w</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
