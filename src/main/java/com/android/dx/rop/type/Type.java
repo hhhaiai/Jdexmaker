@@ -17,6 +17,7 @@
 package com.android.dx.rop.type;
 
 import com.android.dx.util.Hex;
+
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -111,7 +112,7 @@ public final class Type implements TypeBearer, Comparable<Type> {
      * {@code java.lang.annotation.Annotation}
      */
     public static final Type ANNOTATION =
-        new Type("Ljava/lang/annotation/Annotation;", BT_OBJECT);
+            new Type("Ljava/lang/annotation/Annotation;", BT_OBJECT);
 
     /** {@code non-null;} instance representing {@code java.lang.Class} */
     public static final Type CLASS = new Type("Ljava/lang/Class;", BT_OBJECT);
@@ -216,7 +217,8 @@ public final class Type implements TypeBearer, Comparable<Type> {
     public static final Type DOUBLE_ARRAY = new Type("[" + DOUBLE.descriptor, BT_OBJECT);
 
     /** {@code non-null;} instance representing {@code float[]} */
-    public static final Type FLOAT_ARRAY = new Type("[" + FLOAT.descriptor, BT_OBJECT);;
+    public static final Type FLOAT_ARRAY = new Type("[" + FLOAT.descriptor, BT_OBJECT);
+    ;
 
     /** {@code non-null;} instance representing {@code int[]} */
     public static final Type INT_ARRAY = new Type("[" + INT.descriptor, BT_OBJECT);
@@ -373,7 +375,7 @@ public final class Type implements TypeBearer, Comparable<Type> {
 
         int length = descriptor.length();
         if ((firstChar != 'L') ||
-            (descriptor.charAt(length - 1) != ';')) {
+                (descriptor.charAt(length - 1) != ';')) {
             throw new IllegalArgumentException("bad descriptor: " + descriptor);
         }
 
@@ -399,8 +401,8 @@ public final class Type implements TypeBearer, Comparable<Type> {
                 }
                 case '/': {
                     if ((i == 1) ||
-                        (i == (length - 1)) ||
-                        (descriptor.charAt(i - 1) == '/')) {
+                            (i == (length - 1)) ||
+                            (descriptor.charAt(i - 1) == '/')) {
                         throw new IllegalArgumentException("bad descriptor: " + descriptor);
                     }
                     break;
@@ -546,17 +548,28 @@ public final class Type implements TypeBearer, Comparable<Type> {
     @Override
     public String toHuman() {
         switch (basicType) {
-            case BT_VOID:    return "void";
-            case BT_BOOLEAN: return "boolean";
-            case BT_BYTE:    return "byte";
-            case BT_CHAR:    return "char";
-            case BT_DOUBLE:  return "double";
-            case BT_FLOAT:   return "float";
-            case BT_INT:     return "int";
-            case BT_LONG:    return "long";
-            case BT_SHORT:   return "short";
-            case BT_OBJECT:  break;
-            default:         return descriptor;
+            case BT_VOID:
+                return "void";
+            case BT_BOOLEAN:
+                return "boolean";
+            case BT_BYTE:
+                return "byte";
+            case BT_CHAR:
+                return "char";
+            case BT_DOUBLE:
+                return "double";
+            case BT_FLOAT:
+                return "float";
+            case BT_INT:
+                return "int";
+            case BT_LONG:
+                return "long";
+            case BT_SHORT:
+                return "short";
+            case BT_OBJECT:
+                break;
+            default:
+                return descriptor;
         }
 
         if (isArray()) {
@@ -638,7 +651,7 @@ public final class Type implements TypeBearer, Comparable<Type> {
         if (className == null) {
             if (!isReference()) {
                 throw new IllegalArgumentException("not an object type: " +
-                                                   descriptor);
+                        descriptor);
             }
 
             if (descriptor.charAt(0) == '[') {
@@ -730,7 +743,9 @@ public final class Type implements TypeBearer, Comparable<Type> {
     /**
      * Gets whether this type is a primitive type. All types are either
      * primitive or reference types.
-     *
+     * 获取此类型是否为原始类型。 所有类型可分为原始类型或引用类型。
+     * 原始类型有: boolean/byte/char/double/float/int/long/short/void
+     * 其他均属于引用类型
      * @return whether this type is primitive
      */
     public boolean isPrimitive() {
@@ -818,7 +833,7 @@ public final class Type implements TypeBearer, Comparable<Type> {
     public Type getInitializedType() {
         if (initializedType == null) {
             throw new IllegalArgumentException("initialized type: " +
-                                               descriptor);
+                    descriptor);
         }
 
         return initializedType;
@@ -847,7 +862,7 @@ public final class Type implements TypeBearer, Comparable<Type> {
         if (componentType == null) {
             if (descriptor.charAt(0) != '[') {
                 throw new IllegalArgumentException("not an array type: " +
-                                                   descriptor);
+                        descriptor);
             }
             componentType = intern(descriptor.substring(1));
         }
@@ -870,7 +885,7 @@ public final class Type implements TypeBearer, Comparable<Type> {
 
         if (!isReference()) {
             throw new IllegalArgumentException("not a reference type: " +
-                                               descriptor);
+                    descriptor);
         }
 
         if (isUninitialized()) {
@@ -880,7 +895,7 @@ public final class Type implements TypeBearer, Comparable<Type> {
              * just disallow it.
              */
             throw new IllegalArgumentException("already uninitialized: " +
-                                               descriptor);
+                    descriptor);
         }
 
         /*
